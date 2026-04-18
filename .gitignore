@@ -1,69 +1,45 @@
+```
 # Compiled and build artifacts
 *.class
 *.o
 *.obj
+*.exe
+*.dll
+*.so
+*.a
 *.out
-build/
-target/
 
 # Dependencies
 lib/
 libs/
-vendor/
-node_modules/
-.gradle/
+target/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Editors
+.vscode/
+.idea/
 
 # Environment
 .env
 .env.local
 *.env.*
 
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Logs and temp files
-*.log
-*.tmp
-*.temp
-
-# System files
-.DS_Store
-Thumbs.db
-
 # Coverage reports
 coverage/
 htmlcov/
 .coverage
 
-# Python specific
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-*.so
-*.egg-info/
-dist/
-eggs/
-.eggs/
-.wheelhouse/
-.installed.cfg
-.pytest_cache/
+# MyPy cache
 .mypy_cache/
-.tox/
-.coverage*
-.nox/
 
-# Java specific
-*.jar
-*.war
-*.ear
-hs_err_pid*
+# Pytest cache
+.pytest_cache/
 
-# Compressed files
+# Distribution archives
 *.zip
 *.gz
 *.tar
@@ -86,3 +62,4 @@ hs_err_pid*
 *.tar.bz2
 *.tar.xz
 *.tar.zst
+```
