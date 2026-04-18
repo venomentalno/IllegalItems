@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # Copyright 2015 the original author or authors.
@@ -67,15 +67,20 @@ die () {
     exit 1
 } >&2
 
+save () {
+    for i ; do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/" ; done
+    echo " "
+}
+
 # OS specific support (must be 'true' or 'false').
 cygwin=false
 msys=false
 darwin=false
 nonstop=false
-case "$( uname )" in                #(
-  CYGWIN* )         cygwin=true  ;; #(
-  Darwin* )         darwin=true  ;; #(
-  MSYS* / MINGW* )  msys=true    ;; #(
+case "$( uname )" in                #
+  CYGWIN* )         cygwin=true  ;; #
+  Darwin* )         darwin=true  ;; #
+  MSYS* | MINGW* )  msys=true    ;; #
   NONSTOP* )        nonstop=true ;;
 esac
 
@@ -99,15 +104,15 @@ fi
 
 # Increase the maximum file descriptors if we can.
 if ! "$cygwin" && ! "$msys" && ! "$nonstop" ; then
-    case $MAX_FD in #(
+    case $MAX_FD in #
       max*)
         # In POSIX sh, ulimit -H is undefined. That's why the result is checked to see if it worked.
         # shellcheck disable=SC3045
         MAX_FD=$( ulimit -H -n ) ||
             warn "Could not query maximum file descriptor limit"
     esac
-    case $MAX_FD in  #(
-      '' | soft) :;; #(
+    case $MAX_FD in  #
+      '' | soft) :;; #
       *)
         # In POSIX sh, ulimit -n is undefined. It will print a'ulimit: -n: invalid option' if used.
         # shellcheck disable=SC3045
