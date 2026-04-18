@@ -14,7 +14,7 @@
   "license": "MIT",
   "environment": "client",
   "entrypoints": {
-    "main": [
+    "client": [
       "com.venomentalno.illegitems.IllegalItemsMod"
     ]
   },
