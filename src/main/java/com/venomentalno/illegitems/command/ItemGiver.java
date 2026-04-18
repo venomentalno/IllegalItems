@@ -52,7 +52,7 @@ public class ItemGiver {
                     NbtCompound enchantmentsComponent = new NbtCompound();
                     enchantmentsComponent.put("enchants", enchantmentsList);
                     enchantmentsComponent.putBoolean("showInTooltip", true);
-                    itemStack.set(DataComponentTypes.ENCHANTMENTS, NbtComponent.of(enchantmentsComponent).copy());
+                    itemStack.set(DataComponentTypes.ENCHANTMENTS, enchantmentsComponentObj);
                     
                     // Remove enchantments from custom data since we handled it separately
                     nbt.remove("enchantments");
