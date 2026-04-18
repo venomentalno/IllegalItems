@@ -7,8 +7,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.io.StringReader;
-
 public class GiveCommandParser {
     private String itemId;
     private int amount = 1;
@@ -72,7 +70,7 @@ public class GiveCommandParser {
         try {
             Identifier id = parseItemIdentifier(itemId);
             return Registries.ITEM.get(id) != null && 
-                   Registries.ITEM.get(id) != Registries.ITEM.get(new Identifier("minecraft", "air"));
+                   Registries.ITEM.get(id) != Registries.ITEM.get(Identifier.of("minecraft", "air"));
         } catch (Exception e) {
             return false;
         }
@@ -84,8 +82,7 @@ public class GiveCommandParser {
         }
         
         try {
-            StringNbtReader reader = new StringNbtReader(new StringReader(nbtString));
-            return reader.parse();
+            return StringNbtReader.parse(nbtString);
         } catch (Exception e) {
             throw new Exception("Failed to parse NBT: " + e.getMessage());
         }
@@ -94,9 +91,9 @@ public class GiveCommandParser {
     private Identifier parseItemIdentifier(String itemId) {
         if (itemId.contains(":")) {
             String[] parts = itemId.split(":", 2);
-            return new Identifier(parts[0], parts[1]);
+            return Identifier.of(parts[0], parts[1]);
         } else {
-            return new Identifier("minecraft", itemId);
+            return Identifier.of("minecraft", itemId);
         }
     }
 

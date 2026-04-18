@@ -1,6 +1,8 @@
 package com.venomentalno.illegitems.command;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -30,7 +32,7 @@ public class ItemGiver {
 
             // Apply NBT data if present
             if (parser.getNbt() != null) {
-                itemStack.setNbt(parser.getNbt());
+                itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(parser.getNbt()));
             }
 
             // Give the item to the player
