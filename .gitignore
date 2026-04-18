@@ -1,4 +1,3 @@
-```
 # Compiled and build artifacts
 *.class
 *.o
@@ -8,14 +7,11 @@ build/
 target/
 
 # Dependencies
-.gradle/
-libs/
 lib/
-
-# Logs and temp files
-*.log
-*.tmp
-*.swp
+libs/
+vendor/
+node_modules/
+.gradle/
 
 # Environment
 .env
@@ -25,11 +21,15 @@ lib/
 # Editors
 .vscode/
 .idea/
-*.iml
-*.ipr
-*.iws
+*.swp
+*.swo
 
-# OS generated files
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+
+# System files
 .DS_Store
 Thumbs.db
 
@@ -46,7 +46,16 @@ __pycache__/
 .Python
 *.so
 *.egg-info/
+dist/
+eggs/
 .eggs/
+.wheelhouse/
+.installed.cfg
+.pytest_cache/
+.mypy_cache/
+.tox/
+.coverage*
+.nox/
 
 # Java specific
 *.jar
@@ -54,7 +63,26 @@ __pycache__/
 *.ear
 hs_err_pid*
 
-# MyPy cache
-.mypy_cache/
-.pytest_cache/
-```
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst

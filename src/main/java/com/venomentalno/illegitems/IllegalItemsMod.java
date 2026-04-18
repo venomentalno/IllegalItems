@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 
 import com.venomentalno.illegitems.command.GiveCommandHandler;
 import com.venomentalno.illegitems.client.ClientEvents;
+import com.venomentalno.illegitems.screen.KeyBindings;
 
 public class IllegalItemsMod implements ClientModInitializer {
 
