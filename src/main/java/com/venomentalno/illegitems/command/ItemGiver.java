@@ -5,8 +5,12 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 public class ItemGiver {
 
@@ -31,8 +35,33 @@ public class ItemGiver {
             );
 
             // Apply NBT data if present
-            if (parser.getNbt() != null) {
-                itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(parser.getNbt()));
+            NbtCompound nbt = parser.getNbt();
+            if (nbt != null) {
+                // Handle enchantments specifically for Minecraft 1.21+
+                if (nbt.contains("enchantments", NbtElement.COMPOUND_TYPE)) {
+                    NbtCompound enchantmentsNbt = nbt.getCompound("enchantments");
+                    NbtList enchantmentsList = new NbtList();
+                    
+                    for (String key : enchantmentsNbt.getKeys()) {
+                        NbtCompound enchantmentEntry = new NbtCompound();
+                        enchantmentEntry.putString("id", "minecraft:" + key);
+                        enchantmentEntry.putInt("lvl", enchantmentsNbt.getInt(key));
+                        enchantmentsList.add(enchantmentEntry);
+                    }
+                    
+                    NbtCompound enchantmentsComponent = new NbtCompound();
+                    enchantmentsComponent.put("enchants", enchantmentsList);
+                    enchantmentsComponent.putBoolean("showInTooltip", true);
+                    itemStack.set(DataComponentTypes.ENCHANTMENTS, NbtComponent.of(enchantmentsComponent).copy());
+                    
+                    // Remove enchantments from custom data since we handled it separately
+                    nbt.remove("enchantments");
+                }
+                
+                // Apply remaining NBT as custom data
+                if (!nbt.isEmpty()) {
+                    itemStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
+                }
             }
 
             // Give the item to the player

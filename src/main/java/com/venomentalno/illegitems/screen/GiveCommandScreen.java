@@ -23,7 +23,7 @@ public class GiveCommandScreen extends Screen {
     protected void init() {
         // Create text field for command input (no character limit)
         this.commandInput = new TextFieldWidget(this.textRenderer, this.width / 2 - 150, 80, 300, 20, Text.literal("Command"));
-        this.commandInput.setPlaceholder(Text.literal("item_name [amount] {nbt} or diamond[enchantments={...}] 64"));
+        this.commandInput.setPlaceholder(Text.literal("item_name [amount] {nbt} or diamond[enchantments:{...}] 64"));
         this.commandInput.setMaxLength(Integer.MAX_VALUE); // Remove character limit
         this.addDrawableChild(this.commandInput);
         this.setInitialFocus(this.commandInput);
@@ -66,7 +66,7 @@ public class GiveCommandScreen extends Screen {
             this.width / 2, 60, 0xAAAAAA);
         
         context.drawCenteredTextWithShadow(this.textRenderer,
-            Text.literal("§7Example: diamond[enchantments={levels:{sharpness:255}}] 64"),
+            Text.literal("§7Example: diamond[enchantments:{levels:{sharpness:255}}] 64"),
             this.width / 2, 150, 0x888888);
 
         super.render(context, mouseX, mouseY, delta);
