@@ -1,0 +1,47 @@
+name: Build Fabric Mod
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        java-version: [ 21 ]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK ${{ matrix.java-version }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java-version }}
+        distribution: 'temurin'
+        cache: gradle
+    
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+    
+    - name: Build with Gradle
+      run: ./gradlew build
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: build-artifacts-java-${{ matrix.java-version }}
+        path: build/libs/
+        retention-days: 5
+    
+    - name: Publish Test Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: Test Results (Java ${{ matrix.java-version }})
+        path: 'build/test-results/test/*.xml'
+        reporter: 'java-junit'

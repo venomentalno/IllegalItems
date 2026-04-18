@@ -1,0 +1,4 @@
+accessWidener v2 named
+
+accessible field net/minecraft/client/gui/screens/creative/CreativeModeTabs TAB_CONTENTS Lnet/minecraft/world/inventory/CreativeModeTabs$TabContents;
+accessible method net/minecraft/item/ItemStack <init> (Lnet/minecraft/item/ItemConvertible;I)V

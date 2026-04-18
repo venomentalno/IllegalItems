@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "illegitems",
+  "version": "${version}",
+  "name": "Illegal Items",
+  "description": "Give yourself illegal items on restricted servers",
+  "authors": [
+    "venomentalno"
+  ],
+  "contact": {
+    "homepage": "https://github.com/venomentalno/IllegalItems",
+    "sources": "https://github.com/venomentalno/IllegalItems"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "com.venomentalno.illegitems.IllegalItemsMod"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "1.21.4",
+    "java": ">=21"
+  }
+}
