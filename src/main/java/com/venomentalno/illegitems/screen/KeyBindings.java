@@ -6,10 +6,14 @@ import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyBindings {
-    public static final KeyBinding OPEN_GUI = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-        "key.illegitems.open_gui",
-        InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_I,
-        "category.illegitems"
-    ));
+    public static KeyBinding OPEN_GUI;
+
+    public static void register() {
+        OPEN_GUI = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.illegitems.open_gui",
+            InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_I,
+            "category.illegitems"
+        ));
+    }
 }
