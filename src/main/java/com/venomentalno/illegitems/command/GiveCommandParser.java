@@ -47,7 +47,7 @@ public class GiveCommandParser {
             rest = input.substring(itemIdEnd).trim();
         }
         
-        // Check if there's bracket notation for NBT like diamond[enchantments={...}]
+        // Check if there's bracket notation for NBT like diamond[enchantments:{...}]
         if (bracketIndex != -1 && bracketIndex == itemId.length()) {
             // Find matching closing bracket
             int closeBracket = findMatchingBracket(input, bracketIndex, '[', ']');
