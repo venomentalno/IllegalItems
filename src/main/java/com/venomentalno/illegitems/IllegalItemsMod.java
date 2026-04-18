@@ -12,6 +12,7 @@ public class IllegalItemsMod implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         GiveCommandHandler.registerCommand();
+        KeyBindings.register();
         ClientEvents.registerClientEvents();
     }
 }
