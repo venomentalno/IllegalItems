@@ -24,15 +24,52 @@ public class GiveCommandParser {
             throw new Exception("No item specified");
         }
 
-        // Find the item ID (first word)
+        // Find the item ID - handle both "minecraft:diamond" and "diamond[...]" formats
+        int bracketIndex = input.indexOf('[');
         int firstSpace = input.indexOf(' ');
-        if (firstSpace == -1) {
-            itemId = input;
+        
+        // Determine where the item ID ends
+        int itemIdEnd;
+        if (bracketIndex != -1 && (firstSpace == -1 || bracketIndex < firstSpace)) {
+            // Format: diamond[...] or minecraft:diamond[...]
+            itemIdEnd = bracketIndex;
+        } else if (firstSpace != -1) {
+            itemIdEnd = firstSpace;
         } else {
-            itemId = input.substring(0, firstSpace);
-            String rest = input.substring(firstSpace).trim();
-            
-            // Parse amount and NBT
+            itemIdEnd = input.length();
+        }
+        
+        itemId = input.substring(0, itemIdEnd).trim();
+        
+        // Parse the rest (amount and/or NBT in brackets or curly braces)
+        String rest = "";
+        if (itemIdEnd < input.length()) {
+            rest = input.substring(itemIdEnd).trim();
+        }
+        
+        // Check if there's bracket notation for NBT like diamond[enchantments={...}]
+        if (bracketIndex != -1 && bracketIndex == itemId.length()) {
+            // Find matching closing bracket
+            int closeBracket = findMatchingBracket(input, bracketIndex, '[', ']');
+            if (closeBracket != -1) {
+                // Extract content inside brackets as NBT
+                String bracketContent = input.substring(bracketIndex + 1, closeBracket);
+                nbt = parseNbt("{" + bracketContent + "}");
+                
+                // Check if there's more after the bracket (amount)
+                String afterBracket = input.substring(closeBracket + 1).trim();
+                if (!afterBracket.isEmpty()) {
+                    try {
+                        amount = Integer.parseInt(afterBracket);
+                    } catch (NumberFormatException e) {
+                        throw new Exception("Invalid amount: " + afterBracket);
+                    }
+                }
+            } else {
+                throw new Exception("Unclosed bracket in item specification");
+            }
+        } else if (!rest.isEmpty()) {
+            // Traditional format: item amount {nbt}
             int nextSpace = rest.indexOf(' ');
             if (nextSpace == -1) {
                 // Either amount or NBT
@@ -64,6 +101,22 @@ public class GiveCommandParser {
         if (!isValidItemId(itemId)) {
             throw new Exception("Unknown item: " + itemId);
         }
+    }
+    
+    private int findMatchingBracket(String input, int openIndex, char openChar, char closeChar) {
+        int count = 1;
+        for (int i = openIndex + 1; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c == openChar) {
+                count++;
+            } else if (c == closeChar) {
+                count--;
+                if (count == 0) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     private boolean isValidItemId(String itemId) {

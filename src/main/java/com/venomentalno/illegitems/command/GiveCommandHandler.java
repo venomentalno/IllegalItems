@@ -11,24 +11,19 @@ public class GiveCommandHandler {
     public static void registerCommand() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(
-                ClientCommandManager.literal("give")
-                    .then(ClientCommandManager.argument("item", StringArgumentType.word())
-                        .executes(context -> handleGiveCommand(StringArgumentType.getString(context, "item"), ""))
-                        .then(ClientCommandManager.argument("amount", StringArgumentType.greedyString())
-                            .executes(context -> {
-                                String item = StringArgumentType.getString(context, "item");
-                                String rest = StringArgumentType.getString(context, "amount");
-                                return handleGiveCommand(item, rest);
-                            })
-                        )
+                ClientCommandManager.literal("giveillegal")
+                    .then(ClientCommandManager.argument("item", StringArgumentType.greedyString())
+                        .executes(context -> {
+                            String fullCommand = StringArgumentType.getString(context, "item");
+                            return handleGiveCommand(fullCommand);
+                        })
                     )
             );
         });
     }
 
-    private static int handleGiveCommand(String itemId, String rest) {
+    private static int handleGiveCommand(String fullCommand) {
         try {
-            String fullCommand = rest.isEmpty() ? itemId : itemId + " " + rest;
             GiveCommandParser parser = new GiveCommandParser(fullCommand);
             ItemGiver.giveItem(parser);
             return 1;

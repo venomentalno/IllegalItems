@@ -21,9 +21,10 @@ public class GiveCommandScreen extends Screen {
 
     @Override
     protected void init() {
-        // Create text field for command input
+        // Create text field for command input (no character limit)
         this.commandInput = new TextFieldWidget(this.textRenderer, this.width / 2 - 150, 80, 300, 20, Text.literal("Command"));
-        this.commandInput.setPlaceholder(Text.literal("item_name [amount] {nbt}"));
+        this.commandInput.setPlaceholder(Text.literal("item_name [amount] {nbt} or diamond[enchantments={...}] 64"));
+        this.commandInput.setMaxLength(Integer.MAX_VALUE); // Remove character limit
         this.addDrawableChild(this.commandInput);
         this.setInitialFocus(this.commandInput);
 
@@ -61,11 +62,11 @@ public class GiveCommandScreen extends Screen {
         
         // Instructions
         context.drawCenteredTextWithShadow(this.textRenderer,
-            Text.literal("§7Enter a /give command"),
+            Text.literal("§7Use /giveillegal or enter item here"),
             this.width / 2, 60, 0xAAAAAA);
         
         context.drawCenteredTextWithShadow(this.textRenderer,
-            Text.literal("§7Example: diamond 64 {Enchantments:[{id:\"minecraft:sharpness\",lvl:5}]}"),
+            Text.literal("§7Example: diamond[enchantments={levels:{sharpness:255}}] 64"),
             this.width / 2, 150, 0x888888);
 
         super.render(context, mouseX, mouseY, delta);
